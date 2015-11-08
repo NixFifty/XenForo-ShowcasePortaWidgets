@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="NixFifty_Showcase_RecentComments" widget_title="Showcase: Most Recent Comments" widget_desc="" widget_string="1.0.0" widget_version="1" widget_url="" widget_install_class="EWRporta2_Widget_NixFifty_Showcase_Install" widget_install_method="install" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="nixfifty_showcase_recentcomments_limit" edit_format="spinbox" data_type="positive_integer" display_order="10">
+      <default_value>5</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Recent Comments Limit</title>
+      <explain><![CDATA[The maximum number of comments that will be displayed.]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_recentcomments_category" edit_format="callback" data_type="array" display_order="20">
+      <default_value></default_value>
+      <edit_format_params>NFLJ_Showcase_Option_CategoryChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Applicable Categories</title>
+      <explain><![CDATA[Select which categories this widget should display recent comments from.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_NixFifty_Showcase_RecentComments"><![CDATA[<xen:if is="{$wCached.recentComments}">	
+	<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+		<div class="secondaryContent">
+			<h3>{$wTitle}</h3>
+			<xen:require css="EWRwidget_NixFifty_Showcase_RecentComments.css" />
+			<div class="showcaseMostRecentComments">
+				<div class="avatarList">
+					<ol>
+					<xen:foreach loop="$wCached.recentComments" value="$comment">
+						<li>
+							<xen:avatar user="$comment" size="s" img="true" href="{xen:link showcase/comment, $comment}" class="NoOverlay" />
+							
+							<a class="title" href="{xen:link showcase/comment, $comment}">{xen:helper showcasePrefix, $comment} {$comment.item_name}</a>
+							<div class="extraData">
+								{xen:helper snippet,  $comment.message, 100}
+							</div>
+						</li>
+					</xen:foreach>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</xen:if>]]></template>
+    <template title="EWRwidget_NixFifty_Showcase_RecentComments.css"><![CDATA[/* Most Recent Comments Widget */
+.showcaseMostRecentComments .avatarList li
+{
+	margin: 5px 0;
+	overflow: hidden;
+	zoom: 1;
+}
+
+	.showcaseMostRecentComments .avatarList .avatar
+	{
+		margin-right: 5px;
+		float: left;
+		width: 32px;
+		height: 32px;
+		width: auto;
+		height: auto;
+	}
+
+	.showcaseMostRecentComments .avatarList .avatar img
+	{
+		width: 32px;
+		height: 32px;
+	}
+
+	.showcaseMostRecentComments .avatarList .title
+	{
+		font-size: 11px;
+		margin-top: 2px;
+		display: block;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+	
+	.showcaseMostRecentComments .avatarList .username
+	{
+		font-size: 11px;
+		margin-top: 2px;
+		display: inline;
+	}	
+
+	.showcaseMostRecentComments .avatarList .extraData,
+	.showcaseMostRecentComments .avatarList .extraData a
+	{
+		color: {xen:property mutedTextColor};
+	}
+/* END Recent Comments Sidebar Block */]]></template>
+  </templates>
+</widget>

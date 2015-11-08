@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="NixFifty_Showcase_RecentUserReviews" widget_title="Showcase: Recent User Reviews" widget_desc="" widget_string="1.0.0" widget_version="1" widget_url="" widget_install_class="EWRporta2_Widget_NixFifty_Showcase_Install" widget_install_method="install" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="nixfifty_showcase_recentuserreviews_limit" edit_format="spinbox" data_type="positive_integer" display_order="10">
+      <default_value>5</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Recent User Reviews Limit</title>
+      <explain><![CDATA[Enter the amount of recent user reviews you wish to display.]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_recentuserreviews_options" edit_format="checkbox" data_type="array" display_order="20">
+      <default_value></default_value>
+      <edit_format_params>display_title={xen:phrase nflj_showcase_wf_display_title}
+display_pros={xen:phrase nflj_showcase_wf_display_pros}
+display_cons={xen:phrase nflj_showcase_wf_display_cons}
+display_summary={xen:phrase nflj_showcase_wf_display_summary}</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Display Options</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_recentuserreviews_procon_snip" edit_format="spinbox" data_type="positive_integer" display_order="30">
+      <default_value>40</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Pros &amp; Cons Snippet Length</title>
+      <explain><![CDATA[The amount of characters to display before being snipped. 40 is the recommended length for sidebar.]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_recentuserreviews_summary_snip" edit_format="spinbox" data_type="positive_integer" display_order="40">
+      <default_value>250</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Summary Snippet Length</title>
+      <explain><![CDATA[The amount of characters to display before being snipped. 250 is the recommended size for the sidebar.]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_recentuserreviews_category" edit_format="callback" data_type="array" display_order="50">
+      <default_value></default_value>
+      <edit_format_params>NFLJ_Showcase_Option_CategoryChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Applicable Categories</title>
+      <explain><![CDATA[Select which categories this widget should display reviews from.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_NixFifty_Showcase_RecentUserReviews"><![CDATA[<xen:if is="{$wCached.recentUserReviews}">
+    <div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+        <div class="secondaryContent">
+            <h3>{$wTitle}</h3>
+            <xen:require css="nflj_showcase_wf_sidebar.css" />
+
+            <div class="showcaseMostRecentUserReviews">
+                <div class="avatarList">
+                    <ol>
+                        <xen:foreach loop="$wCached.recentUserReviews" value="$ureview">
+                            <li>
+                                <xen:avatar user="$ureview" size="s" img="true" href="{xen:link showcase/review, $ureview}" class="NoOverlay" />
+
+                                <a class="title" href="{xen:link showcase/review, $ureview}">{xen:helper showcasePrefix, $ureview} {$ureview.item_name}</a>
+
+                                <xen:include template="rating">
+                                    <xen:set var="$rating">{$ureview.rating}</xen:set>
+                                    <xen:set var="$action"></xen:set>
+                                </xen:include>
+
+                                <xen:if is="{$ureview.review_title} && {$wCached.displayTitle}">
+                                    <p class="reviewTitle">{xen:helper snippet, $ureview.review_title, 100, {xen:array 'stripQuote=1'}}</p>
+                                </xen:if>
+
+                                <div class="extraData">
+                                    <xen:if is="{$ureview.pros_message} && {$wCached.displayPros}">
+                                        <p class="snippet pro">{xen:phrase nflj_showcase_pros}: {xen:helper snippet, $ureview.pros_message, {$wCached.proconSnip}, {xen:array 'stripQuote=1'}}</p>
+                                    </xen:if>
+                                    <xen:if is="{$ureview.cons_message} && {$wCached.displayCons}">
+                                        <p class="snippet con">{xen:phrase nflj_showcase_cons}: {xen:helper snippet, $ureview.cons_message, {$wCached.proconSnip}, {xen:array 'stripQuote=1'}}</p>
+                                    </xen:if>
+                                    <xen:if is="{$ureview.summary_message} && {$wCached.displaySummary}">
+                                        <p class="snippet summary">{xen:phrase nflj_showcase_summary}: {xen:helper snippet, $ureview.summary_message, {$wCached.summarySnip}, {xen:array 'stripQuote=1'}}</p>
+                                    </xen:if>
+                                </div>
+                            </li>
+                        </xen:foreach>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</xen:if>]]></template>
+  </templates>
+</widget>

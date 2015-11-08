@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="NixFifty_Showcase_RecentImagesGallery" widget_title="Showcase: Recent Images Gallery" widget_desc="" widget_string="1.0.0" widget_version="1" widget_url="" widget_install_class="EWRporta2_Widget_NixFifty_Showcase_Install" widget_install_method="install" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="nixfifty_showcase_recentimagesgallery_limit" edit_format="spinbox" data_type="positive_integer" display_order="10">
+      <default_value>5</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Recent Images Limit</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_recentimagesgallery_featured" edit_format="onoff" data_type="boolean" display_order="20">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Featured Only</title>
+      <explain><![CDATA[When selected, only images that belong to Showcase Items that have been featured will be displayed.]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_recentimagesgallery_layout" edit_format="radio" data_type="string" display_order="30">
+      <default_value>tiny</default_value>
+      <edit_format_params>tiny={xen:phrase nflj_showcase_wf_layout_tiny}
+small={xen:phrase nflj_showcase_wf_layout_small}
+medium={xen:phrase nflj_showcase_wf_layout_medium}
+large={xen:phrase nflj_showcase_wf_layout_large}
+grid={xen:phrase nflj_showcase_wf_layout_grid}</edit_format_params>
+      <sub_options></sub_options>
+      <title>Recent Images Gallery Layout</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_recentimagesgallery_category" edit_format="callback" data_type="array" display_order="40">
+      <default_value></default_value>
+      <edit_format_params>NFLJ_Showcase_Option_CategoryChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Applicable Categories</title>
+      <explain><![CDATA[Select which categories this widget should display images from.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_NixFifty_Showcase_RecentImagesGallery"><![CDATA[<xen:if is="{$wCached.recentImages}">
+    <div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+        <div class="secondaryContent">
+            <h3>{$wTitle}</h3>
+            <xen:if is="{$wCached.recentImages}">
+                <xen:if is="{$wCached.layout} == 'tiny'">
+                    <ul class="followedOnline">
+                        <xen:foreach loop="$wCached.recentImages" value="$item">
+                            <li title="{$item.item_name}" class="Tooltip item-{$item.item_id}">
+                                <a class="avatar NoOverlay" href="{xen:link showcase, $item}">
+                                    <img width="48" height="48" border="0" src="{$item.thumbnailUrl}"/>
+                                </a>
+                            </li>
+                        </xen:foreach>
+                    </ul>
+                    <xen:elseif is="{$wCached.layout} == 'small'"/>
+                    <ul class="avatarHeap">
+                        <xen:foreach loop="$wCached.recentImages" value="$item">
+                            <li title="{$item.item_name}" class="Tooltip item-{$item.item_id}">
+                                <a class="avatar NoOverlay" href="{xen:link showcase, $item}">
+                                    <img width="48" height="48" border="0" src="{$item.thumbnailUrl}"/>
+                                </a>
+                            </li>
+                        </xen:foreach>
+                    </ul>
+                    <xen:elseif is="{$wCached.layout} == 'medium'"/>
+                    <ul class="avatarHeap">
+                        <xen:foreach loop="$wCached.recentImages" value="$item">
+                            <li title="{$item.item_name}" class="Tooltip item-{$item.item_id}">
+                                <a class="avatar NoOverlay" href="{xen:link showcase, $item}">
+                                    <img width="68" height="68" border="0" src="{$item.thumbnailUrl}"/>
+                                </a>
+                            </li>
+                        </xen:foreach>
+                    </ul>
+                    <xen:elseif is="{$wCached.layout} == 'large'"/>
+                    <xen:require js="js/nflj/showcase/jquery.resizecrop-1.0.3.min.js"/>
+                    <xen:require css="EWRwidget_NixFifty_Showcase_ImageGalleryRecent.css"/>
+
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('.showcaseRecentImageThumb .showcaseRecentImageThumbnail').resizecrop({
+                                width: 200,
+                                height: 150,
+                                vertical: "middle"
+                            });
+                        });
+                    </script>
+
+                    <ol class="section showcaseBdImageGalleryBlock">
+                        <div class="section showcaseBdImageGalleryContainer">
+                            <xen:foreach loop="$wCached.recentImages" value="$item">
+                                <div class="showcaseImageContainer">
+                                    <div class="showcaseRecentImageThumb">
+                                        <a href="{xen:link showcase, $item}">
+                                            <img class="showcaseRecentImageThumbnail" src="{$item.thumbnailUrl}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </xen:foreach>
+                        </div>
+                    </ol>
+                    <xen:elseif is="{$wCached.layout} == 'grid'"/>
+                    <xen:require js="js/nflj/showcase/jquery.resizecrop-1.0.3.min.js"/>
+                    <xen:require css="EWRwidget_NixFifty_Showcase_ImageGalleryRecent.css"/>
+
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('.showcaseRecentImageThumb .showcaseRecentImageThumbnail').resizecrop({
+                                width: 200,
+                                height: 150,
+                                vertical: "middle"
+                            });
+                        });
+                    </script>
+
+                    <ol class="section showcaseBdImageGalleryBlock">
+                        <div class="section showcaseBdImageGalleryContainer">
+                            <xen:foreach loop="$wCached.recentImages" value="$item">
+                                <div class="showcaseImageContainer">
+                                    <div class="showcaseRecentImageThumb">
+                                        <a href="{xen:link showcase, $item}">
+                                            <img class="showcaseRecentImageThumbnail" src="{$item.thumbnailUrl}"/>
+                                        </a>
+                                        <span class="{xen:if '{$item.featured}', 'featured'}"></span>
+                                    </div>
+
+                                    <div class="showcaseItemInfo">
+                                        <xen:set var="$linkPrefixHtml"
+                                                 value="{xen:if $item.prefix_id, {xen:link showcase, '', '_params={$pageNavParams}', 'prefix_id={$item.prefix_id}'}, ''}"/>
+                                        <div class="showcaseItemTitle">
+                                            <xen:if is="{$item.prefix_id} AND {$linkPrefixHtml}"><a
+                                                    href="{xen:raw $linkPrefixHtml}" class="prefixLink"
+                                                    title="{xen:phrase nflj_showcase_show_only_items_prefixed_by_x, 'prefix={xen:helper showcasePrefix, $item, escaped, ""}'}">{xen:helper
+                                                showcasePrefix, $item}</a>
+                                                <xen:else/>
+                                                {xen:helper showcasePrefix, $item}
+                                            </xen:if>
+                                            <a
+                                                    href="{xen:link showcase, $item}"
+                                                    class="{xen:if '{$showDescription}', '', 'Tooltip'}"
+                                                    title="{xen:if '{$item.description}', '{$item.description}', '{xen:helper snippet, $item.message, 250}'}"
+                                                    data-tipclass="showcaseItemTooltip">{xen:helper wordtrim,
+                                                $item.item_name, 60}</a>
+                                        </div>
+
+                                        <xen:if is="{$showDescription}">
+                                            <div class="showcaseItemMessage">{xen:if '{$item.description}',
+                                                '{$item.description}', '{xen:helper snippet, $item.message, 250}'}
+                                            </div>
+                                        </xen:if>
+
+                                        <div class="showcaseItemRating">
+                                            <xen:if is="{$item.rate_review_system} == 1 || {$item.rate_review_system} == 2">
+                                                <xen:include template="rating">
+                                                    <xen:set var="$rating">{$item.rating}</xen:set>
+                                                    <xen:set var="$hint">{xen:number $item.view_count} {xen:phrase
+                                                        nflj_showcase_views_lowercase}
+                                                    </xen:set>
+                                                </xen:include>
+                                                <xen:else/>
+                                                <div class="pairsJustified">
+                                                    <div class="rating">
+                                                        <dl>
+                                                            <dt></dt>
+                                                            <dd><span class="Hint">{xen:number $item.view_count} {xen:phrase nflj_showcase_views_lowercase}</span>
+                                                            </dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </xen:if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </xen:foreach>
+                        </div>
+                    </ol>
+                    <xen:else/>
+
+                </xen:if>
+
+            </xen:if>
+        </div>
+    </div>
+</xen:if>]]></template>
+  </templates>
+</widget>

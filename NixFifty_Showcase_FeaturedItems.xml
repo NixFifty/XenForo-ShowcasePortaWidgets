@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="NixFifty_Showcase_FeaturedItems" widget_title="Showcase: Featured Items" widget_desc="" widget_string="1.0.0" widget_version="1" widget_url="" widget_install_class="EWRporta2_Widget_NixFifty_Showcase_Install" widget_install_method="install" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="nixfifty_showcase_featureditems_limit" edit_format="spinbox" data_type="positive_integer" display_order="10">
+      <default_value>5</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Featured Items Limit</title>
+      <explain><![CDATA[The maximum number of featured items that will be displayed.]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_featureditems_attachments" edit_format="onoff" data_type="boolean" display_order="20">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Display Thumbnail</title>
+      <explain><![CDATA[When enabled, a thumbnail of the Showcase item is displayed.]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_featureditems_category" edit_format="callback" data_type="array" display_order="30">
+      <default_value></default_value>
+      <edit_format_params>NFLJ_Showcase_Option_CategoryChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Applicable Categories</title>
+      <explain><![CDATA[Select which categories this widget should display featured items from.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_NixFifty_Showcase_FeaturedItems"><![CDATA[<xen:if is="{$wCached.featuredItems}">	
+	<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+		<div class="secondaryContent">
+			<h3>{$wTitle}</h3>
+			<xen:if is="{$wCached.displayImages}">
+				<xen:require css="nflj_showcase_wf_sidebar.css" />
+				<div class="showcaseListSidebar">
+					<div class="avatarList">
+						<ol>
+							<xen:foreach loop="$wCached.featuredItems" value="$featuredItem">
+								<li>
+									<xen:if is="{$featuredItem.cover_image}">
+										<a class="avatar NoOverlay" href="{xen:link showcase, $featuredItem}">
+											<img width="48" height="48" border="0" src="{$featuredItem.cover_image.thumbnailUrl}" />
+										</a>						
+									<xen:elseif is="{$featuredItem.category_image}" />
+										<a class="avatar NoOverlay" href="{xen:link showcase, $featuredItem}">
+											<img width="48" height="48" border="0" alt="{$featuredItem.category_name}" src="{xen:property imagePath}/nflj/showcase/category_images/{$featuredItem.category_image}">
+										</a>
+									<xen:else />	
+										<xen:avatar user="$featuredItem" size="s" img="true" href="{xen:link showcase, $featuredItem}" class="NoOverlay" />
+									</xen:if>						
+									
+									<a class="title" href="{xen:link showcase, $featuredItem}">{xen:helper snippet, $featuredItem.item_name, 40}</a>
+									<div class="extraData">
+										<xen:username user="$featuredItem" />, <a href="{xen:link showcase, $featuredItem}" class="faint"><xen:datetime time="$featuredItem.date_added" /></a>, <a href="{xen:link showcase/category, $featuredItem}">{$featuredItem.category_name}</a>
+									</div>
+								</li>
+							</xen:foreach>
+						</ol>
+					</div>
+				</div>	
+			<xen:else />
+				<dl>	 
+					<xen:foreach loop="$wCached.featuredItems" value="$featuredItem">
+						<dt style="margin-top:5px;">
+							<a href="{xen:link showcase, $featuredItem}">{xen:helper snippet, $featuredItem.item_name, 40}</a>
+						</dt>
+						<dd class="muted">
+							<xen:username user="$featuredItem" />,</span> <a href="{xen:link showcase, $featuredItem}" class="faint"><xen:datetime time="$featuredItem.date_added" /></a>, <span><a href="{xen:link showcase/category, $featuredItem}">{$featuredItem.category_name}</a>
+						</dd>
+					</xen:foreach>				
+				</dl>	
+			</xen:if>	
+		</div>
+	</div>
+</xen:if>]]></template>
+  </templates>
+</widget>

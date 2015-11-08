@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="NixFifty_Showcase_TabbedItems" widget_title="Showcase: Tabbed Items" widget_desc="" widget_string="1.0.0" widget_version="1" widget_url="" widget_install_class="EWRporta2_Widget_NixFifty_Showcase_Install" widget_install_method="install" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="nixfifty_showcase_tabbeditems_limit" edit_format="spinbox" data_type="positive_integer" display_order="10">
+      <default_value>5</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Tabbed Items Limit</title>
+      <explain><![CDATA[The maximum number of tabbed items that will be displayed.]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_tabbeditems_attachments" edit_format="onoff" data_type="boolean" display_order="20">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Display Thumbnail</title>
+      <explain><![CDATA[When enabled, a thumbnail of the Showcase item is displayed.]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_tabbeditems_featured" edit_format="onoff" data_type="boolean" display_order="30">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Featured Items Tab</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_tabbeditems_recent" edit_format="onoff" data_type="boolean" display_order="40">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Recent Items Tab</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_tabbeditems_popular" edit_format="onoff" data_type="boolean" display_order="50">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Popular Items Tab</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_tabbeditems_top" edit_format="onoff" data_type="boolean" display_order="60">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Top Rated Items Tab</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_tabbeditems_reviews" edit_format="onoff" data_type="boolean" display_order="70">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Most Reviewed Items Tab</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_tabbeditems_liked" edit_format="onoff" data_type="boolean" display_order="80">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Most Liked Items Tab</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="nixfifty_showcase_tabbeditems_category" edit_format="callback" data_type="array" display_order="90">
+      <default_value></default_value>
+      <edit_format_params>NFLJ_Showcase_Option_CategoryChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Applicable Categories</title>
+      <explain><![CDATA[Select which categories this widget should display items from.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_NixFifty_Showcase_TabbedItems"><![CDATA[<xen:if is="{$wCached.featuredItems} || {$wCached.recentItems} || {$wCached.popularItems} ||{$wCached.topRatedItems} || {$wCached.mostReviewedItems} || {$wCached.mostLikedItems}">
+    <div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+        <div class="secondaryContent">
+            <h3>{$wTitle}</h3>
+
+            <div class="scWFTabs">
+                <ul id="scwftabs" class="Tabs tabs scWFTabs" data-panes="#scwftabcontainer > li">
+                    <xen:if is="{$wCached.featuredItems}">
+                        <li>
+                            <a href="">{xen:phrase nflj_showcase_wf_featured_tabname}</a>
+                        </li>
+                    </xen:if>
+                    <xen:if is="{$wCached.recentItems}">
+                        <li>
+                            <a href="">{xen:phrase nflj_showcase_wf_most_recent_tabname}</a>
+                        </li>
+                    </xen:if>
+                    <xen:if is="{$wCached.popularItems}">
+                        <li>
+                            <a href="">{xen:phrase nflj_showcase_wf_most_popular_tabname}</a>
+                        </li>
+                    </xen:if>
+                    <xen:if is="{$wCached.topRatedItems}">
+                        <li>
+                            <a href="">{xen:phrase nflj_showcase_wf_top_rated_tabname}</a>
+                        </li>
+                    </xen:if>
+                    <xen:if is="{$wCached.mostReviewedItems}">
+                        <li>
+                            <a href="">{xen:phrase nflj_showcase_wf_most_reviewed_tabname}</a>
+                        </li>
+                    </xen:if>
+                    <xen:if is="{$wCached.mostLikedItems}">
+                        <li>
+                            <a href="">{xen:phrase nflj_showcase_wf_most_liked_tabname}</a>
+                        </li>
+                    </xen:if>
+                </ul>
+
+                <ul id="scwftabcontainer">
+                    <xen:if is="{$wCached.featuredItems}">
+                        <li>
+                            <div style="padding-top:10px;">
+                                <xen:if is="{$wCached.displayImages}">
+                                    <xen:require css="nflj_showcase_wf_sidebar.css"/>
+                                    <div class="showcaseListSidebar">
+                                        <div class="avatarList">
+                                            <ol>
+                                                <xen:foreach loop="$wCached.featuredItems" value="$featuredItem">
+                                                    <li>
+                                                        <xen:if is="{$featuredItem.cover_image}">
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $featuredItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     src="{$featuredItem.cover_image.thumbnailUrl}"/>
+                                                            </a>
+                                                            <xen:elseif is="{$featuredItem.category_image}"/>
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $featuredItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     alt="{$featuredItem.category_name}"
+                                                                     src="{xen:property imagePath}/nflj/showcase/category_images/{$featuredItem.category_image}">
+                                                            </a>
+                                                            <xen:else/>
+                                                            <xen:avatar user="$featuredItem" size="s" img="true"
+                                                                        href="{xen:link showcase, $featuredItem}"
+                                                                        class="NoOverlay"/>
+                                                        </xen:if>
+
+                                                        <a class="title" href="{xen:link showcase, $featuredItem}">{xen:helper
+                                                            snippet, $featuredItem.item_name, 40}</a>
+
+                                                        <div class="extraData">
+                                                            <xen:username user="$featuredItem"/>
+                                                            , <a href="{xen:link showcase, $featuredItem}"
+                                                                 class="faint">
+                                                            <xen:datetime time="$featuredItem.date_added"/>
+                                                        </a>, <a href="{xen:link showcase/category, $featuredItem}">{$featuredItem.category_name}</a>
+                                                        </div>
+                                                    </li>
+                                                </xen:foreach>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <xen:else/>
+                                    <dl>
+                                        <xen:foreach loop="$wCached.featuredItems" value="$featuredItem">
+                                            <dt style="margin-top:5px;">
+                                                <a href="{xen:link showcase, $featuredItem}">{xen:helper snippet,
+                                                    $featuredItem.item_name, 40}</a>
+                                            </dt>
+                                            <dd class="muted">
+                                                <xen:username user="$featuredItem"/>
+                                                ,</span> <a href="{xen:link showcase, $featuredItem}" class="faint">
+                                                <xen:datetime time="$featuredItem.date_added"/>
+                                            </a>, <span><a href="{xen:link showcase/category, $featuredItem}">{$featuredItem.category_name}</a>
+                                            </dd>
+                                        </xen:foreach>
+                                    </dl>
+                                </xen:if>
+                            </div>
+                        </li>
+                    </xen:if>
+
+                    <xen:if is="{$wCached.recentItems}">
+                        <li>
+                            <div style="padding-top:10px;">
+                                <xen:if is="{$wCached.displayImages}">
+                                    <xen:require css="nflj_showcase_wf_sidebar.css"/>
+                                    <div class="showcaseListSidebar">
+                                        <div class="avatarList">
+                                            <ol>
+                                                <xen:foreach loop="$wCached.recentItems" value="$recentItem">
+                                                    <li>
+                                                        <xen:if is="{$recentItem.cover_image}">
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $recentItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     src="{$recentItem.cover_image.thumbnailUrl}"/>
+                                                            </a>
+                                                            <xen:elseif is="{$recentItem.category_image}"/>
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $recentItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     alt="{$recentItem.category_name}"
+                                                                     src="{xen:property imagePath}/nflj/showcase/category_images/{$recentItem.category_image}">
+                                                            </a>
+                                                            <xen:else/>
+                                                            <xen:avatar user="$recentItem" size="s" img="true"
+                                                                        href="{xen:link showcase, $recentItem}"
+                                                                        class="NoOverlay"/>
+                                                        </xen:if>
+
+                                                        <a class="title" href="{xen:link showcase, $recentItem}">{xen:helper
+                                                            snippet, $recentItem.item_name, 40}</a>
+
+                                                        <div class="extraData">
+                                                            <xen:username user="$recentItem"/>
+                                                            , <a href="{xen:link showcase, $recentItem}" class="faint">
+                                                            <xen:datetime time="$recentItem.date_added"/>
+                                                        </a>, <a href="{xen:link showcase/category, $recentItem}">{$recentItem.category_name}</a>
+                                                        </div>
+                                                    </li>
+                                                </xen:foreach>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <xen:else/>
+                                    <dl>
+                                        <xen:foreach loop="$wCached.recentItems" value="$recentItem">
+                                            <dt style="margin-top:5px;">
+                                                <a href="{xen:link showcase, $recentItem}">{xen:helper snippet,
+                                                    $recentItem.item_name, 40}</a>
+                                            </dt>
+                                            <dd class="muted">
+                                                <xen:username user="$recentItem"/>
+                                                ,</span> <a href="{xen:link showcase, $recentItem}" class="faint">
+                                                <xen:datetime time="$recentItem.date_added"/>
+                                            </a>, <span><a href="{xen:link showcase/category, $recentItem}">{$recentItem.category_name}</a>
+                                            </dd>
+                                        </xen:foreach>
+                                    </dl>
+                                </xen:if>
+                            </div>
+                        </li>
+                    </xen:if>
+
+                    <xen:if is="{$wCached.popularItems}">
+                        <li>
+                            <div style="padding-top:10px;">
+                                <xen:if is="{$wCached.displayImages}">
+                                    <xen:require css="nflj_showcase_wf_sidebar.css"/>
+                                    <div class="showcaseListSidebar">
+                                        <div class="avatarList">
+                                            <ol>
+                                                <xen:foreach loop="$wCached.popularItems" value="$popularItem">
+                                                    <li>
+                                                        <xen:if is="{$popularItem.cover_image}">
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $popularItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     src="{$popularItem.cover_image.thumbnailUrl}"/>
+                                                            </a>
+                                                            <xen:elseif is="{$popularItem.category_image}"/>
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $popularItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     alt="{$popularItem.category_name}"
+                                                                     src="{xen:property imagePath}/nflj/showcase/category_images/{$popularItem.category_image}">
+                                                            </a>
+                                                            <xen:else/>
+                                                            <xen:avatar user="$popularItem" size="s" img="true"
+                                                                        href="{xen:link showcase, $popularItem}"
+                                                                        class="NoOverlay"/>
+                                                        </xen:if>
+
+                                                        <a class="title" href="{xen:link showcase, $popularItem}">{xen:helper
+                                                            snippet, $popularItem.item_name, 40}</a>
+
+                                                        <div class="extraData">
+                                                            <xen:username user="$popularItem"/>
+                                                            , <a href="{xen:link showcase, $popularItem}" class="faint">
+                                                            <xen:datetime time="$popularItem.date_added"/>
+                                                        </a>, <a href="{xen:link showcase/category, $popularItem}">{$popularItem.category_name}</a>
+                                                        </div>
+                                                    </li>
+                                                </xen:foreach>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <xen:else/>
+                                    <dl>
+                                        <xen:foreach loop="$wCached.popularItems" value="$popularItem">
+                                            <dt style="margin-top:5px;">
+                                                <a href="{xen:link showcase, $popularItem}">{xen:helper snippet,
+                                                    $popularItem.item_name, 40}</a>
+                                            </dt>
+                                            <dd class="muted">
+                                                <xen:username user="$popularItem"/>
+                                                ,</span> <a href="{xen:link showcase, $popularItem}" class="faint">
+                                                <xen:datetime time="$popularItem.date_added"/>
+                                            </a>, <span><a href="{xen:link showcase/category, $popularItem}">{$popularItem.category_name}</a>
+                                            </dd>
+                                        </xen:foreach>
+                                    </dl>
+                                </xen:if>
+                            </div>
+                        </li>
+                    </xen:if>
+
+                    <xen:if is="{$wCached.topRatedItems}">
+                        <li>
+                            <div style="padding-top:10px;">
+                                <xen:if is="{$wCached.displayImages}">
+                                    <xen:require css="nflj_showcase_wf_sidebar.css"/>
+                                    <div class="showcaseListSidebar">
+                                        <div class="avatarList">
+                                            <ol>
+                                                <xen:foreach loop="$wCached.topRatedItems" value="$topRatedItem">
+                                                    <li>
+                                                        <xen:if is="{$topRatedItem.cover_image}">
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $topRatedItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     src="{$topRatedItem.cover_image.thumbnailUrl}"/>
+                                                            </a>
+                                                            <xen:elseif is="{$topRatedItem.category_image}"/>
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $topRatedItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     alt="{$topRatedItem.category_name}"
+                                                                     src="{xen:property imagePath}/nflj/showcase/category_images/{$topRatedItem.category_image}">
+                                                            </a>
+                                                            <xen:else/>
+                                                            <xen:avatar user="$topRatedItem" size="s" img="true"
+                                                                        href="{xen:link showcase, $topRatedItem}"
+                                                                        class="NoOverlay"/>
+                                                        </xen:if>
+
+                                                        <a class="title" href="{xen:link showcase, $topRatedItem}">{xen:helper
+                                                            snippet, $topRatedItem.item_name, 40}</a>
+
+                                                        <div class="extraData">
+                                                            <xen:username user="$topRatedItem"/>
+                                                            , <a href="{xen:link showcase, $topRatedItem}"
+                                                                 class="faint">
+                                                            <xen:datetime time="$topRatedItem.date_added"/>
+                                                        </a>, <a href="{xen:link showcase/category, $topRatedItem}">{$topRatedItem.category_name}</a>
+                                                        </div>
+                                                    </li>
+                                                </xen:foreach>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <xen:else/>
+                                    <dl>
+                                        <xen:foreach loop="$wCached.topRatedItems" value="$topRatedItem">
+                                            <dt style="margin-top:5px;">
+                                                <a href="{xen:link showcase, $topRatedItem}">{xen:helper snippet,
+                                                    $topRatedItem.item_name, 40}</a>
+                                            </dt>
+                                            <dd class="muted">
+                                                <xen:username user="$topRatedItem"/>
+                                                ,</span> <a href="{xen:link showcase, $topRatedItem}" class="faint">
+                                                <xen:datetime time="$topRatedItem.date_added"/>
+                                            </a>, <span><a href="{xen:link showcase/category, $topRatedItem}">{$topRatedItem.category_name}</a>
+                                            </dd>
+                                        </xen:foreach>
+                                    </dl>
+                                </xen:if>
+                            </div>
+                        </li>
+                    </xen:if>
+
+                    <xen:if is="{$wCached.mostReviewedItems}">
+                        <li>
+                            <div style="padding-top:10px;">
+                                <xen:if is="{$wCached.displayImages}">
+                                    <xen:require css="nflj_showcase_wf_sidebar.css"/>
+                                    <div class="showcaseListSidebar">
+                                        <div class="avatarList">
+                                            <ol>
+                                                <xen:foreach loop="$wCached.mostReviewedItems"
+                                                             value="$mostReviewedItem">
+                                                    <li>
+                                                        <xen:if is="{$popularItem.cover_image}">
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $mostReviewedItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     src="{$mostReviewedItem.cover_image.thumbnailUrl}"/>
+                                                            </a>
+                                                            <xen:elseif is="{$mostReviewedItem.category_image}"/>
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $mostReviewedItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     alt="{$mostReviewedItem.category_name}"
+                                                                     src="{xen:property imagePath}/nflj/showcase/category_images/{$mostReviewedItem.category_image}">
+                                                            </a>
+                                                            <xen:else/>
+                                                            <xen:avatar user="$mostReviewedItem" size="s" img="true"
+                                                                        href="{xen:link showcase, $mostReviewedItem}"
+                                                                        class="NoOverlay"/>
+                                                        </xen:if>
+
+                                                        <a class="title" href="{xen:link showcase, $mostReviewedItem}">{xen:helper
+                                                            snippet, $mostReviewedItem.item_name, 40}</a>
+
+                                                        <div class="extraData">
+                                                            <xen:username user="$mostReviewedItem"/>
+                                                            , <a href="{xen:link showcase, $mostReviewedItem}"
+                                                                 class="faint">
+                                                            <xen:datetime time="$mostReviewedItem.date_added"/>
+                                                        </a>, <a href="{xen:link showcase/category, $mostReviewedItem}">{$mostReviewedItem.category_name}</a>
+                                                        </div>
+                                                    </li>
+                                                </xen:foreach>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <xen:else/>
+                                    <dl>
+                                        <xen:foreach loop="$wCached.mostReviewedItems" value="$mostReviewedItem">
+                                            <dt style="margin-top:5px;">
+                                                <a href="{xen:link showcase, $mostReviewedItem}">{xen:helper snippet,
+                                                    $mostReviewedItem.item_name, 40}</a>
+                                            </dt>
+                                            <dd class="muted">
+                                                <xen:username user="$mostReviewedItem"/>
+                                                ,</span> <a href="{xen:link showcase, $mostReviewedItem}" class="faint">
+                                                <xen:datetime time="$mostReviewedItem.date_added"/>
+                                            </a>, <span><a href="{xen:link showcase/category, $mostReviewedItem}">{$mostReviewedItem.category_name}</a>
+                                            </dd>
+                                        </xen:foreach>
+                                    </dl>
+                                </xen:if>
+                            </div>
+                        </li>
+                    </xen:if>
+
+                    <xen:if is="{$wCached.mostLikedItems}">
+                        <li>
+                            <div style="padding-top:10px;">
+                                <xen:if is="{$wCached.displayImages}">
+                                    <xen:require css="nflj_showcase_wf_sidebar.css"/>
+                                    <div class="showcaseListSidebar">
+                                        <div class="avatarList">
+                                            <ol>
+                                                <xen:foreach loop="$wCached.mostLikedItems" value="$mostLikedItem">
+                                                    <li>
+                                                        <xen:if is="{$mostLikedItem.cover_image}">
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $mostLikedItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     src="{$mostLikedItem.cover_image.thumbnailUrl}"/>
+                                                            </a>
+                                                            <xen:elseif is="{$mostLikedItem.category_image}"/>
+                                                            <a class="avatar NoOverlay"
+                                                               href="{xen:link showcase, $mostLikedItem}">
+                                                                <img width="48" height="48" border="0"
+                                                                     alt="{$mostLikedItem.category_name}"
+                                                                     src="{xen:property imagePath}/nflj/showcase/category_images/{$mostLikedItem.category_image}">
+                                                            </a>
+                                                            <xen:else/>
+                                                            <xen:avatar user="$mostLikedItem" size="s" img="true"
+                                                                        href="{xen:link showcase, $mostLikedItem}"
+                                                                        class="NoOverlay"/>
+                                                        </xen:if>
+
+                                                        <a class="title" href="{xen:link showcase, $mostLikedItem}">{xen:helper
+                                                            snippet, $mostLikedItem.item_name, 40}</a>
+
+                                                        <div class="extraData">
+                                                            <xen:username user="$mostLikedItem"/>
+                                                            , <a href="{xen:link showcase, $mostLikedItem}"
+                                                                 class="faint">
+                                                            <xen:datetime time="$mostLikedItem.date_added"/>
+                                                        </a>, <a href="{xen:link showcase/category, $mostLikedItem}">{$v.category_name}</a>
+                                                        </div>
+                                                    </li>
+                                                </xen:foreach>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <xen:else/>
+                                    <dl>
+                                        <xen:foreach loop="$wCached.mostLikedItems" value="$mostLikedItem">
+                                            <dt style="margin-top:5px;">
+                                                <a href="{xen:link showcase, $mostLikedItem}">{xen:helper snippet,
+                                                    $mostLikedItem.item_name, 40}</a>
+                                            </dt>
+                                            <dd class="muted">
+                                                <xen:username user="$mostLikedItem"/>
+                                                ,</span> <a href="{xen:link showcase, $mostLikedItem}" class="faint">
+                                                <xen:datetime time="$mostLikedItem.date_added"/>
+                                            </a>, <span><a href="{xen:link showcase/category, $mostLikedItem}">{$mostLikedItem.category_name}</a>
+                                            </dd>
+                                        </xen:foreach>
+                                    </dl>
+                                </xen:if>
+                            </div>
+                        </li>
+                    </xen:if>
+                </ul>
+            </div>
+        </div>
+    </div>
+</xen:if>]]></template>
+  </templates>
+</widget>
